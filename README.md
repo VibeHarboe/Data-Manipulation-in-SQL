@@ -1,27 +1,31 @@
 # Data-Manipulation-in-SQL
-Documenting and practicing advanced SQL techniques for filtering, sorting, aggregating, subqueries, and data transformations.
+Documenting and applying advanced SQL techniques for filtering, transforming, aggregating, and reporting on data using CASE, subqueries, window functions, and table reshaping tools like ROLLUP, CUBE, and pivoting.
 
 # 🧪 Data Manipulation in SQL
 
 Advanced SQL techniques for transforming and filtering data: WHERE, ORDER BY, LIMIT, CASE, aggregates, subqueries, and derived columns.
 
 ## 🎯 Project Description
-This project documents my work in the DataCamp course *Data Manipulation in SQL*. The course covers core SQL operations for data transformation, including filtering, sorting, grouping, conditional logic, and subqueries.
+This project is based on the DataCamp course Data Manipulation in SQL and expands it with structured, business-oriented documentation and reproducible examples. It showcases advanced data analysis techniques using PostgreSQL.
 
 ## 🛠️ Key Skills Acquired
-- Filtering with `WHERE` and logical operators
+- Filtering & conditional logic: `WHERE`, `CASE`, boolean conditions
 - Sorting and limiting with `ORDER BY`, `LIMIT`
-- Conditional logic with `CASE WHEN`
-- Aggregation with `GROUP BY`, `HAVING`
-- Subqueries and derived columns
+- Aggregation & grouping: `GROUP BY`, `HAVING`, `ROLLUP`, `CUBE`
+- Window functions: `RANK()`, `LAG()`, `LEAD()`, `ROWS BETWEEN`
+- Subqueries: scalar, correlated, nested
+- CTEs vs. subqueries: modular query design
+- Pivots with `CROSSTAB`
+- Set operations: `UNION`, `INTERSECT`, `EXCEPT`
+- SQL reporting design & storytelling with layered metrics
 - Data validation and analysis with nested queries
 
 ## 📁 Folder Overview
-- `sql/` → Practice-ready queries grouped by topic
-- `data/` → Raw .csv datasets used throughout the course
-- `docs/` → Technical notes and SQL explanations
-- `visuals/` → Screenshots of query output or BI charts
-- `certificate.pdf` → Certificate of completion
+- `sql/` → Themed SQL files (e.g., case statements, window functions, joins)
+- `data/` → Datasets used for query building (.csv)
+- `docs/` → Markdown explanations of key SQL concepts and techniques
+- `visuals/` → Optional screenshots or query results for reference
+- `certificate.pdf` → DataCamp course certificate of completion
 
 ## 📄 Certificate
 
