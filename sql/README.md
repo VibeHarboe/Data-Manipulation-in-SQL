@@ -1,6 +1,6 @@
 # All .sql files organized by concept
 
-01_case_statement.sql – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
+[01_case_statement.sql](01_case_statement.sql) – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
 
 - Label categorical values dynamically based on logic (e.g., win/loss/tie)
 - Use CASE in SELECT to build readable, user-facing categories
