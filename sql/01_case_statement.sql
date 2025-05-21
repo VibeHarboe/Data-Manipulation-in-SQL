@@ -110,3 +110,73 @@ SELECT
 FROM matches_spain
 WHERE (awayteam_id = 8634 OR hometeam_id = 8634)
   AND (awayteam_id = 8633 OR hometeam_id = 8633);
+
+
+-- ========================================================
+-- SECTION 7: CASE WHEN with Filtering – Bologna Wins Only
+-- ========================================================
+
+-- Identify Bologna's wins as home or away team using CASE logic
+-- Filter to include only matches where Bologna won
+SELECT 
+  season,
+  date,
+  home_goal,
+  away_goal
+FROM matches_italy
+WHERE 
+  CASE 
+    WHEN hometeam_id = 9857 AND home_goal > away_goal THEN 'Bologna Win'
+    WHEN awayteam_id = 9857 AND away_goal > home_goal THEN 'Bologna Win'
+  END IS NOT NULL;
+
+
+-- ========================================================
+-- SECTION 8: CASE WHEN with COUNT – Match Volume per Country per Season
+-- ========================================================
+
+-- Count number of matches played in each country per season using CASE inside COUNT
+SELECT 
+  c.name AS country,
+  COUNT(CASE WHEN m.season = '2012/2013' THEN m.id END) AS matches_2012_2013,
+  COUNT(CASE WHEN m.season = '2013/2014' THEN m.id END) AS matches_2013_2014,
+  COUNT(CASE WHEN m.season = '2014/2015' THEN m.id END) AS matches_2014_2015
+FROM country AS c
+LEFT JOIN match AS m
+  ON c.id = m.country_id
+GROUP BY country;
+
+
+-- ========================================================
+-- SECTION 9: CASE WHEN with SUM – Home Wins per Country per Season
+-- ========================================================
+
+-- Use CASE with SUM to count home wins per country across seasons
+SELECT 
+  c.name AS country,
+  SUM(CASE WHEN m.season = '2012/2013' AND m.home_goal > m.away_goal THEN 1 ELSE 0 END) AS matches_2012_2013,
+  SUM(CASE WHEN m.season = '2013/2014' AND m.home_goal > m.away_goal THEN 1 ELSE 0 END) AS matches_2013_2014,
+  SUM(CASE WHEN m.season = '2014/2015' AND m.home_goal > m.away_goal THEN 1 ELSE 0 END) AS matches_2014_2015
+FROM country AS c
+LEFT JOIN match AS m
+  ON c.id = m.country_id
+GROUP BY country;
+
+
+-- ========================================================
+-- SECTION 10: CASE WHEN with AVG – Percentage of Tied Matches
+-- ========================================================
+
+-- Calculate the percentage of tied matches using CASE logic inside AVG and ROUND to 2 decimals
+SELECT 
+  c.name AS country,
+  ROUND(AVG(CASE WHEN m.season = '2013/2014' AND m.home_goal = m.away_goal THEN 1
+                 WHEN m.season = '2013/2014' AND m.home_goal != m.away_goal THEN 0
+            END), 2) AS pct_ties_2013_2014,
+  ROUND(AVG(CASE WHEN m.season = '2014/2015' AND m.home_goal = m.away_goal THEN 1
+                 WHEN m.season = '2014/2015' AND m.home_goal != m.away_goal THEN 0
+            END), 2) AS pct_ties_2014_2015
+FROM country AS c
+LEFT JOIN match AS m
+  ON c.id = m.country_id
+GROUP BY country;
