@@ -8,5 +8,3 @@
 
 ![PostgreSQL Summary Stats and Window Functions](https://drive.google.com/open?id=1fe6qaOYoPFne4fjQRJpuIm0nuTLzODQv&usp=drive_copy "PostgreSQL Summary Stats and Window Functions")
 
-https://drive.google.com/open?id=1fe6qaOYoPFne4fjQRJpuIm0nuTLzODQv&usp=drive_copy
-https://drive.google.com/file/d/1fe6qaOYoPFne4fjQRJpuIm0nuTLzODQv/view?usp=sharing
