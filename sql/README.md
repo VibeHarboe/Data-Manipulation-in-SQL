@@ -6,7 +6,7 @@
 
 ## 📄 SQL Files Overview
 
-* [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
+* [[01_case_statement.sql](01_case_statement.sql) – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
 
   * Label categorical values dynamically based on logic (e.g., win/loss/tie)
   * Use CASE in SELECT to build readable, user-facing categories
@@ -15,7 +15,7 @@
   * Analyze specific matchups (e.g., El Clásico, Bologna wins, Barcelona performance)
   * Generate cross-season comparisons for match counts and tie percentages by country
 
-* [02_subqueries.sql](02_subqueries.sql) – These examples illustrate real-world SQL logic for performance analytics, league trends, and advanced data slicing using subqueries. Techniques include:
+* [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – These examples illustrate real-world SQL logic for performance analytics, league trends, and advanced data slicing using subqueries. Techniques include:
 
   * Scalar subqueries for conditional filtering
   * List-based subqueries to include/exclude teams
