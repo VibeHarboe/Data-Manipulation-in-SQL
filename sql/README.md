@@ -6,6 +6,7 @@
 - [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – Advanced use of correlated and nested subqueries for contextual goal analysis across country, season, and match-level dimensions
 - [04_common_table_expressions.sql](04_common_table_expressions.sql) – Practical use of single and multiple CTEs for filtering, nesting, team lookups, and match outcome analysis
 - [05_window_functions.sql](05_window_functions.sql) - Advanced use of SQL window functions for contextual aggregation, ranking, and comparison across match-level and medal-based datasets
+- [06_pivot_rollup_cube.sql](06_pivot_rollup_cube.sql) – Pivot tables, grouped subtotals and multidimensional aggregates using CROSSTAB, ROLLUP and CUBE
 
 
 ## 📄 SQL Files Overview
@@ -58,3 +59,17 @@
       * Moving averages (e.g. medal trends)
       * Moving max values (e.g. per-athlete medal peaks)
       * Sliding aggregations over countries and time
+
+* [06_pivot_rollup_cube.sql](06_pivot_rollup_cube.sql) - This file explores powerful summary tools beyond window functions:
+
+  * **CROSSTAB** (PostgreSQL's pivoting tool) for rotating row-level values into columns
+  * **ROLLUP** to add hierarchical subtotals for partial aggregations
+  * **CUBE** to generate all possible combinations of grouping sets, including grand totals
+  * **STRING_AGG** and **RANK** for building ranked summary lists in comma-separated formats
+  * Examples include:
+    - Gender/year medal pivots
+    - Country/gender and medal-type breakdowns
+    - Grand totals and subtotal formatting with `COALESCE`
+    - 3-country medal rankings reshaped for readability
+   
+  ➡ For foundational data manipulation logic behind these summaries (e.g., filtering, subqueries, case logic), see: **Data-Manipulation-in-SQL/**
