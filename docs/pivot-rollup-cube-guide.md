@@ -75,6 +75,8 @@ GROUP BY CUBE(Gender, Medal)
 ORDER BY Gender, Medal;
 ```
 
+✅ Useful for multidimensional reports and dashboards.
+
 Generates:
 
 * Gender + Medal breakdown
