@@ -61,6 +61,7 @@
       * Sliding aggregations over countries and time
 
 * [06_pivot_rollup_cube.sql](06_pivot_rollup_cube.sql) - This file explores powerful summary tools beyond window functions:
+  ➡ For foundational data manipulation logic behind these summaries (e.g., filtering, subqueries, case logic), see: **Data-Manipulation-in-SQL/**
 
   * **CROSSTAB** (PostgreSQL's pivoting tool) for rotating row-level values into columns
   * **ROLLUP** to add hierarchical subtotals for partial aggregations
@@ -71,5 +72,3 @@
     - Country/gender and medal-type breakdowns
     - Grand totals and subtotal formatting with `COALESCE`
     - 3-country medal rankings reshaped for readability
-   
-  ➡ For foundational data manipulation logic behind these summaries (e.g., filtering, subqueries, case logic), see: **Data-Manipulation-in-SQL/**
