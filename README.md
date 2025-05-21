@@ -22,3 +22,11 @@ This project documents my work in the DataCamp course *Data Manipulation in SQL*
 - `docs/` → Technical notes and SQL explanations
 - `visuals/` → Screenshots of query output or BI charts
 - `certificate.pdf` → Certificate of completion
+
+## 📄 Certificate
+
+🔗 View certificate: [DataCamp: PostgreSQL Summary Stats and Window Functions](https://www.datacamp.com/statement-of-accomplishment/course/b49ec92177e3c2ecced4c000c84dbbff12ccfbb8?raw=1)
+
+## 📚 Resources
+
+- [DataCamp: PostgreSQL Summary Stats and Window Functions](https://app.datacamp.com/learn/courses/functions-for-manipulating-data-in-postgresql)
