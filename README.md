@@ -34,3 +34,19 @@ This project is based on the DataCamp course Data Manipulation in SQL and expand
 ## 📚 Resources
 
 - [DataCamp: PostgreSQL Summary Stats and Window Functions](https://app.datacamp.com/learn/courses/functions-for-manipulating-data-in-postgresql)
+
+## 📚 Key Technical Documentation (docs/)
+  * case-and-conditional-logic.md
+  * short-vs-correlated-subqueries.md
+  * cte-vs-subqueries.md
+  * window-functions-explained.md
+  * pivot-rollup-cube-guide.md
+  * reporting-strategies.md
+  * business-value-of-case_and_window_functions.md
+
+These documents support the technical reasoning and business value behind each SQL concept in this project.
+
+🚀 Goal
+
+Create a professional, reference-ready SQL project that showcases real analytical skill — not just for passing a course, but for solving real data problems in business environments.
+
