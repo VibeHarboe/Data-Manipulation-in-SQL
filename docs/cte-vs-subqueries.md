@@ -1,19 +1,27 @@
-CTEs vs. Subqueries
+# CTEs vs. Subqueries
 
 CTEs (Common Table Expressions) and subqueries both allow you to build intermediate result sets, but they differ in readability, reusability, and structure.
 
-🆚 Basic Structure
+This guide summarizes when and why to use each, with practical SQL syntax examples.
 
-Subquery
+---
 
+## 🧱 Basic Syntax Comparison
+
+### Subquery
+
+```sql
 SELECT name
 FROM (
-  SELECT name, salary FROM employees
+  SELECT name, salary
+  FROM employees
   WHERE department = 'Sales'
 ) AS sales_employees;
+```
 
-CTE
+### CTE (WITH Clause)
 
+```sql
 WITH sales_employees AS (
   SELECT name, salary
   FROM employees
@@ -21,63 +29,47 @@ WITH sales_employees AS (
 )
 SELECT name
 FROM sales_employees;
+```
 
-🧠 Key Differences
+---
 
-Feature
+## 🔍 Key Differences
 
-CTE
+| Feature               | CTE                        | Subquery                     |
+| --------------------- | -------------------------- | ---------------------------- |
+| **Readability**       | High – named query blocks  | Moderate – inline/nested     |
+| **Reusability**       | Reusable within same query | Not reusable                 |
+| **Modularity**        | Clear stepwise logic       | Often buried in WHERE/SELECT |
+| **Recursive support** | ✅ Yes                      | ❌ No                         |
+| **Performance**       | Usually similar            | Usually similar              |
 
-Subquery
+---
 
-Readability
+## ✅ When to Use CTEs
 
-High – named blocks
+* Complex queries with multiple transformation steps
+* Recursive structures (e.g. org charts, tree hierarchies)
+* Improved clarity by isolating logic into named blocks
 
-Moderate – nested structures
+## ✅ When to Use Subqueries
 
-Reusability
+* Simple filters or one-time transformations
+* You don’t need to reference the result multiple times
+* Compact logic embedded inside WHERE or SELECT
 
-Reusable within the query
+---
 
-Not reusable
+## 💡 CTEs + Window Functions = Powerful Pattern
 
-Modularity
+CTEs work exceptionally well with window functions, allowing you to:
 
-Easy to refactor/extend
+* Pre-calculate aggregations
+* Cleanly layer ranking, running totals, or gaps
+* Build readable analytical pipelines
 
-Less modular
+### Example
 
-Recursive support
-
-✅ Yes
-
-❌ No
-
-Performance
-
-Similar, but depends on engine
-
-Similar, can vary
-
-✅ When to Use CTEs
-
-When the logic is complex and reused multiple times
-
-When working with recursive structures (e.g., hierarchies)
-
-When you want to separate transformation steps clearly
-
-✅ When to Use Subqueries
-
-For one-off filters or simple nesting
-
-When you don't need to reuse logic
-
-Bonus: CTEs with Window Functions
-
-CTEs pair especially well with window functions for readable and layered analytics:
-
+```sql
 WITH medal_counts AS (
   SELECT country, COUNT(*) AS medals
   FROM Summer_Medals
@@ -87,6 +79,11 @@ WITH medal_counts AS (
 SELECT *,
   RANK() OVER(ORDER BY medals DESC) AS rank
 FROM medal_counts;
+```
 
-This allows clear separation between data preparation and ranking logic.
+---
 
+Use CTEs when your query deserves to be broken into clear, named steps.
+Use subqueries when you just need a quick inline result.
+
+Both are essential tools in SQL – and mastering when to use which makes your code cleaner, faster to debug, and easier to maintain.
