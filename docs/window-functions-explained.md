@@ -2,6 +2,8 @@
 
 Window functions allow you to perform calculations across rows that are related to the current row. Unlike aggregate functions, window functions do not collapse rows.
 
+This guide covers the structure, use cases, and key examples of common window functions in SQL.
+
 ---
 
 ## 🧠 OVER() – Basic Structure
