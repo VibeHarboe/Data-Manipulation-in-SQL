@@ -2,7 +2,7 @@
 
 ## 📄 SQL Files
 - [01_case_statement.sql](01_case_statement.sql) – CASE WHEN logic used to label, filter, and aggregate match results across teams, countries, and seasons
-- [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering, aggregation, and league/stage comparisons
+- [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering and aggregation
 - [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – Advanced use of correlated and nested subqueries for contextual goal analysis across country, season, and match-level dimensions
 
 
