@@ -5,7 +5,7 @@
 - [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering and aggregation
 - [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – Advanced use of correlated and nested subqueries for contextual goal analysis across country, season, and match-level dimensions
 - [04_common_table_expressions.sql](04_common_table_expressions.sql) – Practical use of single and multiple CTEs for filtering, nesting, team lookups, and match outcome analysis
-- [05_window_functions.sql](05_window_functions.sql) - 
+- [05_window_functions.sql](05_window_functions.sql) - Advanced use of SQL window functions for contextual aggregation, ranking, and comparison across match-level and medal-based datasets
 
 
 ## 📄 SQL Files Overview
@@ -44,3 +44,17 @@
   * Multiple CTEs layered to calculate per-season high scoring patterns
   * Dual CTEs to extract both home and away team names for matches
   * CTE-driven match outcome tagging for specific teams (e.g. Manchester United in 2014/2015)
+ 
+* [05_window_functions.sql](05_window_functions.sql) – This file showcases a wide range of window function techniques using both football match and Olympic medal data. Covered concepts include:
+
+  * OVER() for global aggregates across all rows (e.g. overall average goals)
+  * RANK() and DENSE_RANK() to rank leagues and athletes within partitions
+  * PARTITION BY to group calculations across seasons, countries, or months
+  * NTILE() to split athletes or events into equal-sized buckets for tiered analysis
+  * LAG() and LEAD() to compare past or future champions and medalists
+  * FIRST_VALUE() and LAST_VALUE() to capture anchor points in sorted partitions
+  * SUM(), AVG(), and MAX() combined with ROWS BETWEEN frames for:
+      * Running totals (e.g. cumulative goals)
+      * Moving averages (e.g. medal trends)
+      * Moving max values (e.g. per-athlete medal peaks)
+      * Sliding aggregations over countries and time
