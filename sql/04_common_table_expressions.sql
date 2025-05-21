@@ -161,5 +161,5 @@ WHERE season = '2014/2015'
   AND (home.team_long_name = 'Manchester United' OR away.team_long_name = 'Manchester United');
 
 -- ========================================================
-For more advanced CTE's, check out [05_window_functions.sql](05_window_functions.sql)
+For more advanced CTE's, check out https://github.com/steelduckii/Data-Manipulation-in-SQL/blob/main/sql/05_window_functions.sql
 -- ========================================================
