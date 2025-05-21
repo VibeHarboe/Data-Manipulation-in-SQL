@@ -247,3 +247,148 @@ SELECT
   NTILE(3) OVER (ORDER BY Medals DESC) AS Third
 FROM Athlete_Medals
 ORDER BY Medals DESC, Athlete ASC;
+
+
+-- ========================================================
+-- SECTION 12: Olympic Athlete Running Totals – Cumulative SUM by Name
+-- ========================================================
+
+-- Calculate running total of gold medals by USA athletes since 2000
+WITH Athlete_Medals AS (
+  SELECT
+    Athlete, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE
+    Country = 'USA' AND Medal = 'Gold'
+    AND Year >= 2000
+  GROUP BY Athlete
+)
+SELECT
+  Athlete,
+  Medals,
+  SUM(Medals) OVER (ORDER BY athlete ASC) AS Max_Medals
+FROM Athlete_Medals
+ORDER BY Athlete ASC;
+
+
+-- ========================================================
+-- SECTION 13: Olympic Country Medal Records – Yearly Max with PARTITION
+-- ========================================================
+
+-- Return each country's medal count by year and the maximum achieved so far
+WITH Country_Medals AS (
+  SELECT
+    Year, Country, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE
+    Country IN ('CHN', 'KOR', 'JPN')
+    AND Medal = 'Gold' AND Year >= 2000
+  GROUP BY Year, Country
+)
+SELECT
+  Year,
+  Country,
+  Medals,
+  MAX(Medals) OVER (PARTITION BY Country ORDER BY Year ASC) AS Max_Medals
+FROM Country_Medals
+ORDER BY Country ASC, Year ASC;
+
+
+-- ========================================================
+-- SECTION 14: Moving Maximum – Sliding Frame by Year (Scandinavia)
+-- ========================================================
+
+-- Get the max medal count between the current year and the following year
+WITH Scandinavian_Medals AS (
+  SELECT
+    Year, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE
+    Country IN ('DEN', 'NOR', 'FIN', 'SWE', 'ISL')
+    AND Medal = 'Gold'
+  GROUP BY Year
+)
+SELECT
+  Year,
+  Medals,
+  MAX(Medals) OVER (
+    ORDER BY Year ASC
+    ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING
+  ) AS Max_Medals
+FROM Scandinavian_Medals
+ORDER BY Year ASC;
+
+
+-- ========================================================
+-- SECTION 15: Moving Maximum – Sliding Frame by Athlete (China)
+-- ========================================================
+
+-- Get the max medal count over the current and previous two athletes alphabetically
+WITH Chinese_Medals AS (
+  SELECT
+    Athlete, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE
+    Country = 'CHN' AND Medal = 'Gold'
+    AND Year >= 2000
+  GROUP BY Athlete
+)
+SELECT
+  Athlete,
+  Medals,
+  MAX(Medals) OVER (
+    ORDER BY Athlete ASC
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+  ) AS Max_Medals
+FROM Chinese_Medals
+ORDER BY Athlete ASC;
+
+
+-- ========================================================
+-- SECTION 16: Moving Average – 3-Year Frame by Year (Russia)
+-- ========================================================
+
+-- Calculate the 3-year moving average of gold medals for Russia
+WITH Russian_Medals AS (
+  SELECT
+    Year, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE
+    Country = 'RUS'
+    AND Medal = 'Gold'
+    AND Year >= 1980
+  GROUP BY Year
+)
+SELECT
+  Year,
+  Medals,
+  AVG(Medals) OVER (
+    ORDER BY Year ASC
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+  ) AS Medals_MA
+FROM Russian_Medals
+ORDER BY Year ASC;
+
+
+-- ========================================================
+-- SECTION 17: Moving Total – 3-Year Frame by Country and Year
+-- ========================================================
+
+-- Calculate 3-year moving sum of medals per country over time
+WITH Country_Medals AS (
+  SELECT
+    Year, Country, COUNT(*) AS Medals
+  FROM Summer_Medals
+  GROUP BY Year, Country
+)
+SELECT
+  Year,
+  Country,
+  Medals,
+  SUM(Medals) OVER (
+    PARTITION BY Country
+    ORDER BY Year ASC
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+  ) AS Medals_MA
+FROM Country_Medals
+ORDER BY Country ASC, Year ASC;
