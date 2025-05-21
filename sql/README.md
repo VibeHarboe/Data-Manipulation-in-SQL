@@ -3,6 +3,8 @@
 ## 📄 SQL Files
 - [01_case_statement.sql](01_case_statement.sql) – CASE WHEN logic used to label, filter, and aggregate match results across teams, countries, and seasons
 - [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering, aggregation, and league/stage comparisons
+- [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – Advanced use of correlated and nested subqueries for contextual goal analysis across country, season, and match-level dimensions
+
 
 ## 📄 SQL Files Overview
 
@@ -23,4 +25,14 @@
   * Subqueries in SELECT for calculated comparisons
   * Multi-layered subqueries to compare stages against season-wide averages
   * Combined clause strategies (SELECT, FROM, WHERE) in one query
+
+* [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql)– These examples reflect real-world SQL patterns for exploratory data analysis and league-level performance comparison. Covered patterns include:
+
+  * Correlated subqueries in WHERE clauses to identify outlier matches by country and season
+  * Multi-condition correlation (e.g. country + season) for pinpointed maximum value filtering
+  * Nested subqueries in SELECT to compute temporal maxima (e.g. overall vs. monthly highs)
+  * Nested subqueries in FROM to support complex aggregation workflows like average of counts
+  * Stepwise transformations with clean logic and scalable performance queries
+
+
 
