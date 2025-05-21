@@ -41,8 +41,6 @@ ORDER BY league_rank;
 -- SECTION 3: PARTITION BY – Warsaw Goals by Season and Month
 -- ========================================================
 
--- Compare Warsaw's home and away goals to seasonal and monthly averages
--- Subsection A: Seasonal average
 SELECT
   date,
   season,
@@ -50,17 +48,7 @@ SELECT
   away_goal,
   CASE WHEN hometeam_id = 8673 THEN 'home' ELSE 'away' END AS warsaw_location,
   AVG(home_goal) OVER(PARTITION BY season) AS season_homeavg,
-  AVG(away_goal) OVER(PARTITION BY season) AS season_awayavg
-FROM match
-WHERE hometeam_id = '8673' OR awayteam_id = '8673';
-
--- Subsection B: Monthly average within each season
-SELECT 
-  date,
-  season,
-  home_goal,
-  away_goal,
-  CASE WHEN hometeam_id = 8673 THEN 'home' ELSE 'away' END AS warsaw_location,
+  AVG(away_goal) OVER(PARTITION BY season) AS season_awayavg,
   AVG(home_goal) OVER(PARTITION BY season, EXTRACT(MONTH FROM date)) AS season_mo_home,
   AVG(away_goal) OVER(PARTITION BY season, EXTRACT(MONTH FROM date)) AS season_mo_away
 FROM match
@@ -295,92 +283,59 @@ ORDER BY Country ASC, Year ASC;
 
 
 -- ========================================================
--- SECTION 14: Moving Maximum – Sliding Frame by Year (Scandinavia)
+-- SECTION 14: Moving Aggregates – Framed Calculations Across Country & Time
 -- ========================================================
 
--- Get the max medal count between the current year and the following year
+-- A. Max between current and next year (Scandinavia)
 WITH Scandinavian_Medals AS (
-  SELECT
-    Year, COUNT(*) AS Medals
+  SELECT Year, COUNT(*) AS Medals
   FROM Summer_Medals
-  WHERE
-    Country IN ('DEN', 'NOR', 'FIN', 'SWE', 'ISL')
-    AND Medal = 'Gold'
-  GROUP BY Year
-)
+  WHERE Country IN ('DEN', 'NOR', 'FIN', 'SWE', 'ISL') AND Medal = 'Gold'
+  GROUP BY Year)
 SELECT
   Year,
   Medals,
   MAX(Medals) OVER (
     ORDER BY Year ASC
-    ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING
-  ) AS Max_Medals
+    ROWS BETWEEN CURRENT ROW AND 1 FOLLOWING) AS moving_max
 FROM Scandinavian_Medals
 ORDER BY Year ASC;
 
-
--- ========================================================
--- SECTION 15: Moving Maximum – Sliding Frame by Athlete (China)
--- ========================================================
-
--- Get the max medal count over the current and previous two athletes alphabetically
+-- B. Max over current and previous 2 athletes (China)
 WITH Chinese_Medals AS (
-  SELECT
-    Athlete, COUNT(*) AS Medals
+  SELECT Athlete, COUNT(*) AS Medals
   FROM Summer_Medals
-  WHERE
-    Country = 'CHN' AND Medal = 'Gold'
-    AND Year >= 2000
-  GROUP BY Athlete
-)
+  WHERE Country = 'CHN' AND Medal = 'Gold' AND Year >= 2000
+  GROUP BY Athlete)
 SELECT
   Athlete,
   Medals,
   MAX(Medals) OVER (
     ORDER BY Athlete ASC
-    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-  ) AS Max_Medals
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS moving_max
 FROM Chinese_Medals
 ORDER BY Athlete ASC;
 
-
--- ========================================================
--- SECTION 16: Moving Average – 3-Year Frame by Year (Russia)
--- ========================================================
-
--- Calculate the 3-year moving average of gold medals for Russia
+-- C. 3-year moving average of gold medals (Russia)
 WITH Russian_Medals AS (
-  SELECT
-    Year, COUNT(*) AS Medals
+  SELECT Year, COUNT(*) AS Medals
   FROM Summer_Medals
-  WHERE
-    Country = 'RUS'
-    AND Medal = 'Gold'
-    AND Year >= 1980
-  GROUP BY Year
-)
+  WHERE Country = 'RUS' AND Medal = 'Gold' AND Year >= 1980
+  GROUP BY Year)
 SELECT
   Year,
   Medals,
   AVG(Medals) OVER (
     ORDER BY Year ASC
-    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-  ) AS Medals_MA
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS moving_avg
 FROM Russian_Medals
 ORDER BY Year ASC;
 
-
--- ========================================================
--- SECTION 17: Moving Total – 3-Year Frame by Country and Year
--- ========================================================
-
--- Calculate 3-year moving sum of medals per country over time
+-- D. 3-year moving sum per country (global)
 WITH Country_Medals AS (
-  SELECT
-    Year, Country, COUNT(*) AS Medals
+  SELECT Year, Country, COUNT(*) AS Medals
   FROM Summer_Medals
-  GROUP BY Year, Country
-)
+  GROUP BY Year, Country)
 SELECT
   Year,
   Country,
@@ -388,7 +343,6 @@ SELECT
   SUM(Medals) OVER (
     PARTITION BY Country
     ORDER BY Year ASC
-    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-  ) AS Medals_MA
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS moving_sum
 FROM Country_Medals
 ORDER BY Country ASC, Year ASC;
