@@ -46,7 +46,7 @@ This project is based on the DataCamp course Data Manipulation in SQL and expand
 
 These documents support the technical reasoning and business value behind each SQL concept in this project.
 
-🚀 Goal
+## 🚀 Goal
 
 Create a professional, reference-ready SQL project that showcases real analytical skill — not just for passing a course, but for solving real data problems in business environments.
 
