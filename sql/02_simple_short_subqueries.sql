@@ -129,7 +129,7 @@ GROUP BY l.name;
 
 
 -- ========================================================
--- SECTION 8–10: Subqueries for Temporal Comparison – Stage-Level Goal Analysis (2012/2013)
+-- SECTION 8: Subqueries for Temporal Comparison – Stage-Level Goal Analysis (2012/2013)
 -- ========================================================
 
 -- Return average goals per stage and compare with overall season average
@@ -191,3 +191,31 @@ WHERE s.avg_goals > (
   FROM match
   WHERE season = '2012/2013'
 );
+
+
+-- ========================================================
+-- SECTION 11: Dual Subqueries in FROM – Team Names per Match
+-- ========================================================
+
+-- Return match data with both home and away team names using two subqueries in FROM
+SELECT
+  m.date,
+  home.hometeam,
+  away.awayteam,
+  m.home_goal,
+  m.away_goal
+FROM match AS m
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS hometeam
+  FROM match
+  LEFT JOIN team
+    ON match.hometeam_id = team.team_api_id
+) AS home
+  ON home.id = m.id
+LEFT JOIN (
+  SELECT match.id, team.team_long_name AS awayteam
+  FROM match
+  LEFT JOIN team
+    ON match.awayteam_id = team.team_api_id
+) AS away
+  ON away.id = m.id;
