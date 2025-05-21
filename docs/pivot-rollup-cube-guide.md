@@ -48,6 +48,8 @@ GROUP BY ROLLUP(Country, Gender)
 ORDER BY Country, Gender;
 ```
 
+✅ Adds grouped subtotals and grand total rows.
+
 ### Output:
 
 * Country + Gender
