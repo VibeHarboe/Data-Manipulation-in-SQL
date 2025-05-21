@@ -35,6 +35,8 @@ Use `ROLLUP()` to add subtotals:
 GROUP BY ROLLUP(department)
 ```
 
+✅ Adds aggregate context to your reports.
+
 ---
 
 ## 🪜 Strategy 2: Funnel Reporting with Conditions
@@ -51,6 +53,10 @@ GROUP BY user_id;
 ```
 
 Add conversion logic using `HAVING` or `WHERE` on calculated columns.
+
+```sql
+HAVING MAX(CASE WHEN step = 'checkout' THEN 1 ELSE 0 END) = 1
+```
 
 ---
 
@@ -76,6 +82,8 @@ FROM clicks c
 JOIN conversions conv ON c.campaign_id = conv.campaign_id;
 ```
 
+✅ Makes complex queries modular and maintainable.
+
 ---
 
 ## 🧮 Strategy 4: Time-Based Reporting
@@ -94,6 +102,8 @@ Use `ROWS BETWEEN` to build moving averages:
 ```sql
 AVG(signups) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
 ```
+
+✅ Useful for forecasting, momentum, and anomaly detection.
 
 ---
 
@@ -124,7 +134,7 @@ Use this format in dashboards, Excel exports, or PDF reports.
 * Add `LIMIT` when previewing reports
 * Always label derived columns with clear `AS` aliases
 * Validate aggregates with a small test group before scaling
-* Comment complex logic to aid stakeholder review
+* Add inline -- comments for stakeholder-facing logic
 
 ---
 
