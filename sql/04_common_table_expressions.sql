@@ -1,8 +1,9 @@
--- #########################################################
+-- ################################################################
 -- Common Table Expressions (CTEs) for modular, readable,
 -- and reusable query components across transformations
--- For more advanced CTE's, check out --> 05_window_functions.sql
--- #########################################################
+-- ▶ For examples of layered and partitioned CTEs in analytics
+-- workflows, see the advanced use cases in 05_window_functions.sql
+-- ################################################################
 
 -- ========================================================
 -- SECTION 1: Basic CTE – High Scoring Matches per League
