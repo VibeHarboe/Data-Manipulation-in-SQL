@@ -1,7 +1,7 @@
 # All .sql files organized by concept
 
 ## 📄 SQL Files
-- [01_case_statement.sql](01_case_statement.sql) –
+- [01_case_statement.sql](01_case_statement.sql) – CASE WHEN logic used to label, filter, and aggregate match results across teams, countries, and seasons
 
 ## 📄 SQL Files Overview
 
