@@ -131,11 +131,6 @@ Use this format in dashboards, Excel exports, or PDF reports.
 Well-structured SQL reports bridge the gap between raw data and business insight.
 Use CTEs, aggregations, filters, and formatting techniques to make your queries readable, reusable, and presentation-ready.
 
-
-# Reporting Strategies in SQL
-
-Designing reports in SQL isn’t just about returning data — it’s about telling a story with metrics. This guide outlines proven strategies for structuring analytical SQL queries to power business dashboards, stakeholder reports, and data-driven decisions.
-
 ---
 
 ## 🧩 Modular Thinking: Build in Layers
