@@ -228,3 +228,22 @@ SELECT
   NTILE(111) OVER (ORDER BY Event ASC) AS Page
 FROM Events
 ORDER BY Event ASC;
+
+
+-- ========================================================
+-- SECTION 11: Olympic Athlete Medal Distribution – NTILE(3)
+-- ========================================================
+
+-- Split athletes into top, middle, and bottom thirds based on medal counts
+WITH Athlete_Medals AS (
+  SELECT Athlete, COUNT(*) AS Medals
+  FROM Summer_Medals
+  GROUP BY Athlete
+  HAVING COUNT(*) > 1
+)
+SELECT
+  Athlete,
+  Medals,
+  NTILE(3) OVER (ORDER BY Medals DESC) AS Third
+FROM Athlete_Medals
+ORDER BY Medals DESC, Athlete ASC;
