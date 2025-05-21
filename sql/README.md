@@ -26,7 +26,7 @@
   * Multi-layered subqueries to compare stages against season-wide averages
   * Combined clause strategies (SELECT, FROM, WHERE) in one query
 
-* [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql)– These examples reflect real-world SQL patterns for exploratory data analysis and league-level performance comparison. Covered patterns include:
+* [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – These examples reflect real-world SQL patterns for exploratory data analysis and league-level performance comparison. Covered patterns include:
 
   * Correlated subqueries in WHERE clauses to identify outlier matches by country and season
   * Multi-condition correlation (e.g. country + season) for pinpointed maximum value filtering
