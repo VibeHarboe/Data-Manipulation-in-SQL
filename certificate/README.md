@@ -6,5 +6,5 @@
 ## 📚 Resources
 - [DataCamp: PostgreSQL Summary Stats and Window Functions](https://app.datacamp.com/learn/courses/functions-for-manipulating-data-in-postgresql)
 
-![PostgreSQL Summary Stats and Window Functions](https://drive.google.com/open?id=1fe6qaOYoPFne4fjQRJpuIm0nuTLzODQv&usp=drive_copy "PostgreSQL Summary Stats and Window Functions")
+![PostgreSQL Summary Stats and Window Functions](visuals/PostgreSQL Summary Stats and Window Functions.png) "PostgreSQL Summary Stats and Window Functions")
 
