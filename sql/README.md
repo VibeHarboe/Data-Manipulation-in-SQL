@@ -2,11 +2,11 @@
 
 ## 📄 SQL Files
 - [01_case_statement.sql](01_case_statement.sql) – CASE WHEN logic used to label, filter, and aggregate match results across teams, countries, and seasons
-- [02_subqueries.sql](02_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering, aggregation, and league/stage comparisons
+- [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering, aggregation, and league/stage comparisons
 
 ## 📄 SQL Files Overview
 
-* [01_case_statement.sql](01_case_statement.sql) – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
+* [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Use of SQL CASE WHEN expressions to classify, count, filter, and compare match outcomes across multiple scenarios:
 
   * Label categorical values dynamically based on logic (e.g., win/loss/tie)
   * Use CASE in SELECT to build readable, user-facing categories
