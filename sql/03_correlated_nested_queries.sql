@@ -82,3 +82,21 @@ LEFT JOIN (
 ) AS outer_s
   ON c.id = outer_s.country_id
 GROUP BY country;
+
+
+-- ========================================================
+-- SECTION 5: Correlated Subqueries in SELECT – Team Names per Match
+-- ========================================================
+
+-- Return match data with home and away team names using correlated subqueries in SELECT clause
+SELECT
+  m.date,
+  (SELECT team_long_name
+   FROM team AS t
+   WHERE t.team_api_id = m.hometeam_id) AS hometeam,
+  (SELECT team_long_name
+   FROM team AS t
+   WHERE t.team_api_id = m.awayteam_id) AS awayteam,
+  m.home_goal,
+  m.away_goal
+FROM match AS m;
