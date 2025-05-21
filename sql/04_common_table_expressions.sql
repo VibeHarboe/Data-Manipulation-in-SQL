@@ -159,3 +159,126 @@ LEFT JOIN home ON m.id = home.id
 LEFT JOIN away ON m.id = away.id
 WHERE season = '2014/2015'
   AND (home.team_long_name = 'Manchester United' OR away.team_long_name = 'Manchester United');
+
+----------------------------------------------------------------------------------------------------------------
+-- ========================================================
+-- SECTION 7: RANK() OVER() – MU Losses Ranked by Goal Difference (2014/2015)
+-- ========================================================
+
+-- Rank all Manchester United losses in 2014/2015 by goal difference using a window function
+WITH home AS (
+  SELECT m.id, t.team_long_name,
+    CASE WHEN m.home_goal > m.away_goal THEN 'MU Win'
+         WHEN m.home_goal < m.away_goal THEN 'MU Loss' ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.hometeam_id = t.team_api_id
+),
+away AS (
+  SELECT m.id, t.team_long_name,
+    CASE WHEN m.home_goal > m.away_goal THEN 'MU Loss'
+         WHEN m.home_goal < m.away_goal THEN 'MU Win' ELSE 'Tie' END AS outcome
+  FROM match AS m
+  LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id
+)
+SELECT DISTINCT
+  m.date,
+  home.team_long_name AS home_team,
+  away.team_long_name AS away_team,
+  m.home_goal, m.away_goal,
+  RANK() OVER(ORDER BY ABS(home_goal - away_goal) DESC) AS match_rank
+FROM match AS m
+LEFT JOIN home ON m.id = home.id
+LEFT JOIN away ON m.id = away.id
+WHERE m.season = '2014/2015'
+  AND ((home.team_long_name = 'Manchester United' AND home.outcome = 'MU Loss')
+    OR (away.team_long_name = 'Manchester United' AND away.outcome = 'MU Loss'));
+
+
+-- ========================================================
+-- SECTION 8: Olympic Champions with LAG() – Gender and Event Variants
+-- ========================================================
+
+-- A. Javelin gold medalists by gender
+WITH Tennis_Gold AS (
+  SELECT DISTINCT Gender, Year, Country
+  FROM Summer_Medals
+  WHERE Year >= 2000 AND Event = 'Javelin Throw' AND Medal = 'Gold')
+SELECT Gender, Year, Country AS Champion,
+  LAG(Country) OVER(PARTITION BY Gender ORDER BY Year ASC) AS Last_Champion
+FROM Tennis_Gold
+ORDER BY Gender, Year;
+
+-- B. 100M & 10000M gold medalists by gender and event
+WITH Athletics_Gold AS (
+  SELECT DISTINCT Gender, Year, Event, Country
+  FROM Summer_Medals
+  WHERE Year >= 2000 AND Discipline = 'Athletics'
+    AND Event IN ('100M', '10000M') AND Medal = 'Gold')
+SELECT Gender, Year, Event, Country AS Champion,
+  LAG(Country, 1) OVER(PARTITION BY Gender, Event ORDER BY Year ASC) AS Last_Champion
+FROM Athletics_Gold
+ORDER BY Event, Gender, Year;
+
+
+-- ========================================================
+-- SECTION 9: Olympic Medalist Forecasting – LEAD() and Value Comparisons
+-- ========================================================
+
+-- A. Future gold medalists in women's discus (3 ahead)
+WITH Discus_Medalists AS (
+  SELECT DISTINCT Year, Athlete
+  FROM Summer_Medals
+  WHERE Medal = 'Gold' AND Event = 'Discus Throw' AND Gender = 'Women' AND Year >= 2000)
+SELECT Year, Athlete,
+  LEAD(Athlete, 3) OVER (ORDER BY Year ASC) AS Future_Champion
+FROM Discus_Medalists
+ORDER BY Year;
+
+
+-- ========================================================
+-- SECTION 10: Olympic Medalists – First and Last Values
+-- ========================================================
+
+-- A. First alphabetical male gold medalist
+WITH All_Male_Medalists AS (
+  SELECT DISTINCT Athlete
+  FROM Summer_Medals
+  WHERE Medal = 'Gold' AND Gender = 'Men')
+SELECT Athlete,
+  FIRST_VALUE(Athlete) OVER (ORDER BY Athlete ASC) AS First_Athlete
+FROM All_Male_Medalists;
+
+-- B. Last city to host the Olympic Games
+WITH Hosts AS (
+  SELECT DISTINCT Year, City
+  FROM Summer_Medals)
+SELECT Year, City,
+  LAST_VALUE(City) OVER (
+    ORDER BY Year ASC
+    RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS Last_City
+FROM Hosts
+ORDER BY Year;
+
+
+-- ========================================================
+-- SECTION 11: Olympic Athlete Rankings – DENSE_RANK by Country
+-- ========================================================
+
+-- Rank athletes within each country by medal count using DENSE_RANK (no skipped ranks)
+WITH Athlete_Medals AS (
+  SELECT
+    Country, Athlete, COUNT(*) AS Medals
+  FROM Summer_Medals
+  WHERE Country IN ('JPN', 'KOR') AND Year >= 2000
+  GROUP BY Country, Athlete
+  HAVING COUNT(*) > 1
+)
+SELECT
+  Country,
+  Athlete,
+  DENSE_RANK() OVER (
+    PARTITION BY Country
+    ORDER BY Medals DESC) AS Rank_N
+FROM Athlete_Medals
+ORDER BY Country ASC, Rank_N ASC;
+
