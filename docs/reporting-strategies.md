@@ -130,3 +130,131 @@ Use this format in dashboards, Excel exports, or PDF reports.
 
 Well-structured SQL reports bridge the gap between raw data and business insight.
 Use CTEs, aggregations, filters, and formatting techniques to make your queries readable, reusable, and presentation-ready.
+
+
+# Reporting Strategies in SQL
+
+Designing reports in SQL isn’t just about returning data — it’s about telling a story with metrics. This guide outlines proven strategies for structuring analytical SQL queries to power business dashboards, stakeholder reports, and data-driven decisions.
+
+---
+
+## 🧩 Modular Thinking: Build in Layers
+
+Split queries into logical steps using CTEs (`WITH` clauses):
+
+* Isolate filtering
+* Apply grouping/aggregation
+* Add window logic or formatting
+
+```sql
+WITH base AS (
+  SELECT * FROM sales WHERE year = 2023
+), grouped AS (
+  SELECT region, SUM(amount) AS total_sales FROM base GROUP BY region
+)
+SELECT *, RANK() OVER(ORDER BY total_sales DESC) AS rank FROM grouped;
+```
+
+✅ Improves readability & reusability.
+
+---
+
+## 📊 Use Window Functions for Trends & Rankings
+
+Window functions allow you to:
+
+* Compare values across rows (e.g. rankings, deltas)
+* Calculate running totals, moving averages
+* Identify first/last records in each group
+
+```sql
+SELECT 
+  region, 
+  sales_month, 
+  SUM(amount) OVER(PARTITION BY region ORDER BY sales_month) AS running_total
+FROM monthly_sales;
+```
+
+✅ Enables trend tracking inside one query block.
+
+---
+
+## 🧮 ROLLUP & CUBE for Subtotals and Summary Rows
+
+For reports that require roll-up views (e.g. region + global totals):
+
+```sql
+SELECT region, product, SUM(sales) AS total
+FROM sales
+GROUP BY ROLLUP(region, product);
+```
+
+✅ Adds subtotals for hierarchy levels.
+
+Use `CUBE(region, product)` for all combination groupings.
+
+---
+
+## 🔄 Pivot Results for Readability
+
+Turn rows into columns for easy reading with `CROSSTAB` (PostgreSQL):
+
+```sql
+SELECT * FROM CROSSTAB($$
+  SELECT region, month, revenue FROM revenue_data
+$$) AS ct (
+  region TEXT, jan NUMERIC, feb NUMERIC, mar NUMERIC
+);
+```
+
+✅ Makes time series and comparison easier for end users.
+
+---
+
+## 🔍 Combine Filters + Metrics for Storytelling
+
+Example: Report showing active users, churned users, and revenue per country:
+
+```sql
+WITH base AS (
+  SELECT * FROM users WHERE signup_date >= '2023-01-01'
+), churned AS (
+  SELECT country, COUNT(*) AS churned FROM base WHERE status = 'churned' GROUP BY country
+), active AS (
+  SELECT country, COUNT(*) AS active FROM base WHERE status = 'active' GROUP BY country
+), revenue AS (
+  SELECT country, SUM(revenue) AS total_revenue FROM base GROUP BY country
+)
+SELECT 
+  a.country, 
+  active, 
+  churned, 
+  total_revenue
+FROM active a
+LEFT JOIN churned c ON a.country = c.country
+LEFT JOIN revenue r ON a.country = r.country;
+```
+
+✅ Ties metrics together into a full narrative.
+
+---
+
+## 🧠 Tips for Report-Driven SQL Design
+
+* Use **aliases** clearly (e.g. `AS total_customers`)
+* Avoid overly nested queries — break into CTEs
+* Use **window functions** instead of joins where logical
+* Pre-aggregate data when possible
+* Add **comments** for stakeholder clarity
+
+---
+
+## 🏁 Final Thought
+
+Good reporting SQL isn’t about clever tricks — it’s about:
+
+* Clean logic
+* Structured presentation
+* Metrics that answer real questions
+
+Master these strategies to produce SQL that powers decision-making at scale.
