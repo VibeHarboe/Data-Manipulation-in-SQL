@@ -4,6 +4,8 @@
 - [01_case_statement.sql](01_case_statement.sql) – CASE WHEN logic used to label, filter, and aggregate match results across teams, countries, and seasons
 - [02_simple_short_subqueries.sql](02_simple_short_subqueries.sql) – Practical subqueries in SELECT, FROM, and WHERE clauses for filtering and aggregation
 - [03_correlated_nested_queries.sql](03_correlated_nested_queries.sql) – Advanced use of correlated and nested subqueries for contextual goal analysis across country, season, and match-level dimensions
+- [04_common_table_expressions.sql](04_common_table_expressions.sql) – Structured use of CTEs for filtering, joining, nesting, and multi-step transformations including team names and scoring analysis
+
 
 
 ## 📄 SQL Files Overview
@@ -34,5 +36,10 @@
   * Nested subqueries in FROM to support complex aggregation workflows like average of counts
   * Stepwise transformations with clean logic and scalable performance queries
 
+* [04_common_table_expressions.sql](04_common_table_expressions.sql) – These examples highlight how CTEs can improve readability, reusability, and performance in complex SQL operations, making them ideal for maintainable analytics pipelines:
 
-
+  * Simple CTEs to replace subqueries for filtering and aggregation
+  * CTEs that join multiple tables and derive new columns (e.g. total goals)
+  * Nested subqueries inside CTEs for targeted temporal analysis (e.g. August 2013/2014)
+  * Multiple layered CTEs to compute per-season metrics and averages
+  * Dual CTEs to cleanly extract both home and away team names per match
