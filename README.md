@@ -1,5 +1,5 @@
 # Data-Manipulation-in-SQL
-Documenting and applying advanced SQL techniques for filtering, transforming, aggregating, and reporting on data using CASE, subqueries, window functions, and table reshaping tools like ROLLUP, CUBE, and pivoting.
+Documenting and applying advanced SQL techniques for filtering, transforming, aggregating, summary stats and reporting on data using CASE, subqueries, window functions, and table reshaping tools like ROLLUP, CUBE, and pivoting.
 
 # 🧪 Data Manipulation in SQL
 
