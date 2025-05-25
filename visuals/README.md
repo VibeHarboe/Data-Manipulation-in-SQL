@@ -1,1 +1,3 @@
- # Screenshots or result previews (optional)
+# Visuals folder
+
+This folder contains files related to visuals.
