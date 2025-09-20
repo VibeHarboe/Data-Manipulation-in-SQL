@@ -144,8 +144,8 @@ WITH home AS (
 ),
 away AS (
   SELECT m.id, t.team_long_name,
-    CASE WHEN m.home_goal > m.away_goal THEN 'MU Win'
-         WHEN m.home_goal < m.away_goal THEN 'MU Loss' 
+    CASE WHEN m.away_goal > m.home_goal THEN 'MU Win'
+         WHEN m.away_goal < m.home_goal THEN 'MU Loss'
          ELSE 'Tie' END AS outcome
   FROM match AS m
   LEFT JOIN team AS t ON m.awayteam_id = t.team_api_id
