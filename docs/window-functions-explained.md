@@ -89,7 +89,7 @@ Use for:
 ## ✅ When to Use
 
 * Rankings (`RANK()` + `PARTITION BY`) 
-* Running totals / averages (`SUM())` + `ROWS BETWEEN`) 
+* Running totals / averages (`SUM()` + `ROWS BETWEEN`) 
 * Trend or Before/after comparison (`LAG()` or `LEAD()`)
 * Percentile analysis (`NTILE(4)` or `PERCENT_RANK()`)
 * Advanced reporting
