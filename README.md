@@ -25,7 +25,7 @@ This project is based on the DataCamp course Data Manipulation in SQL and expand
 - `data/` → Datasets used for query building (.csv)
 - `docs/` → Markdown explanations of key SQL concepts and techniques
 - `visuals/` → Optional screenshots or query results for reference
-- `certificate.pdf` → DataCamp course certificate of completion
+- `certificate/` → Certificate resources and links to the DataCamp statements of accomplishment
 
 ## 📄 Certificate
 
